@@ -12,26 +12,19 @@ import FirebaseFirestore
 final class ProductsViewModel: ObservableObject {
     
     @Published private(set) var products: [Product] = []
-    @Published var selectedFilterByPrice: SortingByPrice? = nil
+    @Published var selectedFilterByPrice: SortingByPriceAndRating? = nil
     @Published var selectedCategory: Category? = nil
     private var lastDocument: DocumentSnapshot? = nil
 
-    enum SortingByPrice: String, CaseIterable {
+    enum SortingByPriceAndRating: String, CaseIterable {
+        case rating = "By rating"
         case ascending = "Ascending by price"
         case descending = "Descending by price"
-        
-        var sortDescending: Bool {
-            switch self {
-                case .ascending:
-                    return true
-                case .descending:
-                    return false
-            }
-        }
     }
+
     
     enum Category: CaseIterable {
-        case groceries, furniture, fragrances, beauty
+        case groceries, furniture, fragrances, beauty, ALL
 
         var name: String {
             switch self {
@@ -43,11 +36,14 @@ final class ProductsViewModel: ObservableObject {
                 return "fragrances"
             case .beauty:
                 return "beauty"
+            case .ALL:
+                return "all"
             }
         }
     }
 
-    func getProductsByPrice(option: SortingByPrice) {
+    func getProductsByPriceAndRating(option: SortingByPriceAndRating) {
+        
         self.selectedFilterByPrice = option
         self.products = []
         self.lastDocument = nil
@@ -63,13 +59,16 @@ final class ProductsViewModel: ObservableObject {
     
     func getProducts() {
         Task {
-            let (newProducts, lastDocument) = try await ProductManager.shared.getAllProductsQuery(forPriceFilter: self.selectedFilterByPrice?.sortDescending, forCategoryFilter: self.selectedCategory?.name, count: 5, lastDocument: lastDocument)
+            let (newProducts, lastDocument) = try await ProductManager.shared.getAllProductsQuery(forPriceAndRankFilter: self.selectedFilterByPrice, forCategoryFilter: self.selectedCategory?.name, count: 5, lastDocument: lastDocument)
             self.products.append(contentsOf: newProducts)
             if let lastDocument {
                 self.lastDocument = lastDocument
             }
         }
     }
+    
+    
+    
     
     
     //MARK: For downloading data

@@ -34,26 +34,65 @@ final class ProductManager {
         return productsCollection.whereField(Product.CodingKeys.category.rawValue, isEqualTo: option)
     }
     
+    private func getProductsByRatingQuery() -> Query {
+        return productsCollection.order(by: Product.CodingKeys.rating.rawValue, descending: true)
+    }
+    
     private func getProductsPriceAndCategoryQuery(option: String, descending: Bool) -> Query {
         productsCollection
             .whereField(Product.CodingKeys.category.rawValue, isEqualTo: option)
             .order(by: Product.CodingKeys.price.rawValue, descending: descending)
     }
     
-    func getAllProductsQuery(forPriceFilter descending: Bool?, forCategoryFilter option: String?, count: Int, lastDocument: DocumentSnapshot?) async throws -> ([Product], DocumentSnapshot?) {
+    private func getProductsRankAndCategoryQuery(option: String) -> Query {
+        productsCollection
+            .whereField(Product.CodingKeys.category.rawValue, isEqualTo: option)
+            .order(by: Product.CodingKeys.price.rawValue, descending: true)
+    }
+    
+    func getAllProductsQuery(forPriceAndRankFilter filter: ProductsViewModel.SortingByPriceAndRating?, forCategoryFilter option: String?, count: Int, lastDocument: DocumentSnapshot?) async throws -> ([Product], DocumentSnapshot?) {
         var query: Query = self.getAllProductsQuery()
-        if let descending, let option {
-            query = self.getProductsPriceAndCategoryQuery(option: option, descending: descending)
-        } else if let option {
+        
+        if let filter = filter {
+            switch filter {
+            case .rating:
+                if let option = option {
+                    query = self.getProductsRankAndCategoryQuery(option: option)
+                } else {
+                    query = self.getProductsByRatingQuery()
+                }
+            case .descending, .ascending:
+                let descending = (filter == .descending)
+                if let option = option {
+                    query = self.getProductsPriceAndCategoryQuery(option: option, descending: descending)
+                } else {
+                    query = self.getProductsByPriceQuery(descending: descending)
+                }
+            }
+        } else if let option = option {
             query = self.getProductsByCategoryQuery(option: option)
-        } else if let descending {
-            query = self.getProductsByPriceQuery(descending: descending)
         }
+        
         return try await query
             .startFromLast(afterDocument: lastDocument)
             .limit(to: count)
-            .getDocumentsWithSnapshot()
+            .getDocumentsWithSnapshot(as: Product.self)
     }
+    
+//    func getProductsByRating(count: Int, lastDocument: DocumentSnapshot?) async throws -> (products: [Product], lastDocument: DocumentSnapshot?) {
+//        if let lastDocument {
+//            return try await productsCollection
+//                .order(by: Product.CodingKeys.rating.rawValue, descending: true)
+//                .limit(to: count)
+//                .startFromLast(afterDocument: lastDocument)
+//                .getDocumentsWithSnapshot(as: Product.self)
+//        } else {
+//            return try await productsCollection
+//                .order(by: Product.CodingKeys.rating.rawValue, descending: true)
+//                .limit(to: count)
+//                .getDocumentsWithSnapshot(as: Product.self)
+//        }
+//    }
     
     private func getAllProducts() async throws -> [Product] {
         try await productsCollection

@@ -22,16 +22,16 @@ struct ProductsView: View {
                 }
             }
         }
-        .navigationBarTitle("Products")
         .onAppear {
             vm.getProducts()
         }
+        .navigationBarTitle("Products")
         .toolbar {
             ToolbarItem(placement: .navigationBarLeading) {
                 Menu {
-                    ForEach(ProductsViewModel.SortingByPrice.allCases, id: \.self) { option in
+                    ForEach(ProductsViewModel.SortingByPriceAndRating.allCases, id: \.self) { option in
                         Button(option.rawValue.capitalized) {
-                            vm.getProductsByPrice(option: option)
+                            vm.getProductsByPriceAndRating(option: option)
                         }
                     }
                 } label: {
@@ -52,6 +52,7 @@ struct ProductsView: View {
 
             }
         }
+
     }
 }
 
