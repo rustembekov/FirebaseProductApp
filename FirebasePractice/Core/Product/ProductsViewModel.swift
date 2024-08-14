@@ -23,22 +23,14 @@ final class ProductsViewModel: ObservableObject {
     }
 
     
-    enum Category: CaseIterable {
+    enum Category: String, CaseIterable {
         case groceries, furniture, fragrances, beauty, ALL
-
-        var name: String {
-            switch self {
-            case .groceries:
-                return "groceries"
-            case .furniture:
-                return "furniture"
-            case .fragrances:
-                return "fragrances"
-            case .beauty:
-                return "beauty"
-            case .ALL:
-                return "all"
+        
+        var categoryName: String? {
+            if self == .ALL {
+                return nil
             }
+            return self.rawValue
         }
     }
 
@@ -59,7 +51,7 @@ final class ProductsViewModel: ObservableObject {
     
     func getProducts() {
         Task {
-            let (newProducts, lastDocument) = try await ProductManager.shared.getAllProductsQuery(forPriceAndRankFilter: self.selectedFilterByPrice, forCategoryFilter: self.selectedCategory?.name, count: 5, lastDocument: lastDocument)
+            let (newProducts, lastDocument) = try await ProductManager.shared.getAllProductsQuery(forPriceAndRankFilter: self.selectedFilterByPrice, forCategoryFilter: self.selectedCategory?.categoryName, count: 5, lastDocument: lastDocument)
             self.products.append(contentsOf: newProducts)
             if let lastDocument {
                 self.lastDocument = lastDocument

@@ -27,15 +27,15 @@ final class ProductManager {
     }
     
     private func getProductsByPriceQuery(descending: Bool) -> Query {
-        return productsCollection.order(by: Product.CodingKeys.price.rawValue, descending: descending)
+        productsCollection.order(by: Product.CodingKeys.price.rawValue, descending: descending)
     }
     
     private func getProductsByCategoryQuery(option: String) -> Query {
-        return productsCollection.whereField(Product.CodingKeys.category.rawValue, isEqualTo: option)
+        productsCollection.whereField(Product.CodingKeys.category.rawValue, isEqualTo: option)
     }
     
     private func getProductsByRatingQuery() -> Query {
-        return productsCollection.order(by: Product.CodingKeys.rating.rawValue, descending: true)
+        productsCollection.order(by: Product.CodingKeys.rating.rawValue, descending: true)
     }
     
     private func getProductsPriceAndCategoryQuery(option: String, descending: Bool) -> Query {
@@ -44,10 +44,10 @@ final class ProductManager {
             .order(by: Product.CodingKeys.price.rawValue, descending: descending)
     }
     
-    private func getProductsRankAndCategoryQuery(option: String) -> Query {
+    private func getProductsRatingAndCategoryQuery(option: String) -> Query {
         productsCollection
             .whereField(Product.CodingKeys.category.rawValue, isEqualTo: option)
-            .order(by: Product.CodingKeys.price.rawValue, descending: true)
+            .order(by: Product.CodingKeys.rating.rawValue, descending: true)
     }
     
     func getAllProductsQuery(forPriceAndRankFilter filter: ProductsViewModel.SortingByPriceAndRating?, forCategoryFilter option: String?, count: Int, lastDocument: DocumentSnapshot?) async throws -> ([Product], DocumentSnapshot?) {
@@ -57,7 +57,7 @@ final class ProductManager {
             switch filter {
             case .rating:
                 if let option = option {
-                    query = self.getProductsRankAndCategoryQuery(option: option)
+                    query = self.getProductsRatingAndCategoryQuery(option: option)
                 } else {
                     query = self.getProductsByRatingQuery()
                 }

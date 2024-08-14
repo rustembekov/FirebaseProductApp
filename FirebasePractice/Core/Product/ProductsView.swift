@@ -42,7 +42,7 @@ struct ProductsView: View {
             ToolbarItem(placement: .navigationBarTrailing) {
                 Menu {
                     ForEach(ProductsViewModel.Category.allCases, id: \.self) { option in
-                        Button(option.name.capitalized) {
+                        Button(option.categoryName?.capitalized ?? "All products") {
                             vm.getProductsByCategory(option: option)
                         }
                     }
