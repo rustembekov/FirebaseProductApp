@@ -72,9 +72,9 @@ final class ProductManager {
         } else if let option = option {
             query = self.getProductsByCategoryQuery(option: option)
         }
-        
+        query = query.startFromLast(afterDocument: lastDocument)
+
         return try await query
-            .startFromLast(afterDocument: lastDocument)
             .limit(to: count)
             .getDocumentsWithSnapshot(as: Product.self)
     }
