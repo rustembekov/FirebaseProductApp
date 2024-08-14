@@ -6,8 +6,7 @@
 //
 
 import Foundation
-
-
+import FirebaseFirestore
 
 @MainActor
 final class ProductsViewModel: ObservableObject {
@@ -15,7 +14,8 @@ final class ProductsViewModel: ObservableObject {
     @Published private(set) var products: [Product] = []
     @Published var selectedFilterByPrice: SortingByPrice? = nil
     @Published var selectedCategory: Category? = nil
-    
+    private var lastDocument: DocumentSnapshot? = nil
+
     enum SortingByPrice: String, CaseIterable {
         case ascending = "Ascending by price"
         case descending = "Descending by price"
@@ -50,18 +50,24 @@ final class ProductsViewModel: ObservableObject {
     func getProductsByPrice(option: SortingByPrice) {
         self.selectedFilterByPrice = option
         self.products = []
+        self.lastDocument = nil
         self.getProducts()
     }
     
     func getProductsByCategory(option: Category) {
         self.selectedCategory = option
         self.products = []
+        self.lastDocument = nil
         self.getProducts()
     }
     
     func getProducts() {
         Task {
-            self.products = try await ProductManager.shared.getAllProducts(forPriceFilter: self.selectedFilterByPrice?.sortDescending, forCategoryFilter: self.selectedCategory?.name)
+            let (newProducts, lastDocument) = try await ProductManager.shared.getAllProductsQuery(forPriceFilter: self.selectedFilterByPrice?.sortDescending, forCategoryFilter: self.selectedCategory?.name, count: 5, lastDocument: lastDocument)
+            self.products.append(contentsOf: newProducts)
+            if let lastDocument {
+                self.lastDocument = lastDocument
+            }
         }
     }
     

@@ -22,35 +22,38 @@ final class ProductManager {
         try productDocument(productId: "\(product.id)").setData(from: product, merge: false)
     }
     
-    private func getAllProducts() -> Query {
+    private func getAllProductsQuery() -> Query {
         return productsCollection
     }
     
-    private func getProductsByPrice(descending: Bool) -> Query {
+    private func getProductsByPriceQuery(descending: Bool) -> Query {
         return productsCollection.order(by: Product.CodingKeys.price.rawValue, descending: descending)
     }
     
-    private func getProductsByCategory(option: String) -> Query {
+    private func getProductsByCategoryQuery(option: String) -> Query {
         return productsCollection.whereField(Product.CodingKeys.category.rawValue, isEqualTo: option)
     }
     
-    private func getProductsPriceAndCategory(option: String, descending: Bool) -> Query {
+    private func getProductsPriceAndCategoryQuery(option: String, descending: Bool) -> Query {
         productsCollection
             .whereField(Product.CodingKeys.category.rawValue, isEqualTo: option)
             .order(by: Product.CodingKeys.price.rawValue, descending: descending)
     }
-    func getAllProducts(forPriceFilter descending: Bool?, forCategoryFilter option: String?) -> Query {
-        if let descending, let option {
-            return self.getProductsPriceAndCategory(option: option, descending: descending)
-        } else if let option {
-            return self.getProductsByCategory(option: option)
-        } else if let descending {
-            return self.getProductsByPrice(descending: descending)
-        }
-        return self.getAllProducts()
-    }
     
-     
+    func getAllProductsQuery(forPriceFilter descending: Bool?, forCategoryFilter option: String?, count: Int, lastDocument: DocumentSnapshot?) async throws -> ([Product], DocumentSnapshot?) {
+        var query: Query = self.getAllProductsQuery()
+        if let descending, let option {
+            query = self.getProductsPriceAndCategoryQuery(option: option, descending: descending)
+        } else if let option {
+            query = self.getProductsByCategoryQuery(option: option)
+        } else if let descending {
+            query = self.getProductsByPriceQuery(descending: descending)
+        }
+        return try await query
+            .startFromLast(afterDocument: lastDocument)
+            .limit(to: count)
+            .getDocumentsWithSnapshot()
+    }
     
     private func getAllProducts() async throws -> [Product] {
         try await productsCollection
@@ -58,6 +61,12 @@ final class ProductManager {
             .getDocuments(as: Product.self)
     }
     
+    func getProduct(productId: String) async throws -> Product {
+        try await productDocument(productId: productId).getDocument(as: Product.self)
+    }
+    
+    //MARK: Get Products by async
+    /*
     private func getProductsByPrice(descending: Bool) async throws -> [Product] {
         try await productsCollection.order(by: "price", descending: descending).getDocuments(as: Product.self)
     }
@@ -83,10 +92,8 @@ final class ProductManager {
         }
         return try await self.getAllProducts()
     }
+    */
     
-    func getProduct(productId: String) async throws -> Product {
-        try await productDocument(productId: productId).getDocument(as: Product.self)
-    }
     
 }
 

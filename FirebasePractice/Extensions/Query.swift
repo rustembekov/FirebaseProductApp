@@ -16,7 +16,16 @@ extension Query {
         }
     }
     
-    func getDocumentsWithSnapshot(){
-        
+    func getDocumentsWithSnapshot<T>() async throws -> ([T] , DocumentSnapshot?) where T: Decodable {
+        let snapshot = try await self.getDocuments()
+        let products = try snapshot.documents.map { document in
+            try document.data(as: T.self)
+        }
+        return (products, snapshot.documents.last)
+    }
+    
+    func startFromLast(afterDocument lastElement: DocumentSnapshot?) -> Query {
+        guard let lastElement else { return self }
+        return self.start(afterDocument: lastElement)
     }
 }

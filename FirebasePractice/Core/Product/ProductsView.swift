@@ -14,6 +14,12 @@ struct ProductsView: View {
         List {
             ForEach(vm.products) { product in
                 ProductCellView(product: product)
+                if product == vm.products.last {
+                    ProgressView()
+                        .onAppear {
+                            vm.getProducts()
+                        }
+                }
             }
         }
         .navigationBarTitle("Products")
