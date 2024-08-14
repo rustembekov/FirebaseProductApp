@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		FA05E6292C59466A00711498 /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = FA05E6282C59466A00711498 /* GoogleSignIn */; };
 		FA05E62B2C59466A00711498 /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = FA05E62A2C59466A00711498 /* GoogleSignInSwift */; };
+		FA0F80452C6C76E300CBD29B /* Query.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0F80442C6C76E300CBD29B /* Query.swift */; };
 		FA3118592C594F65004A9CDE /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FA3118582C594F65004A9CDE /* GoogleService-Info.plist */; };
 		FA31185C2C5954E3004A9CDE /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA31185B2C5954E3004A9CDE /* ViewController.swift */; };
 		FA31185E2C59BAC2004A9CDE /* GoogleSignInHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA31185D2C59BAC2004A9CDE /* GoogleSignInHelper.swift */; };
@@ -42,6 +43,7 @@
 
 /* Begin PBXFileReference section */
 		FA05E62C2C59471F00711498 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		FA0F80442C6C76E300CBD29B /* Query.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Query.swift; sourceTree = "<group>"; };
 		FA3118582C594F65004A9CDE /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		FA31185B2C5954E3004A9CDE /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		FA31185D2C59BAC2004A9CDE /* GoogleSignInHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleSignInHelper.swift; sourceTree = "<group>"; };
@@ -94,6 +96,14 @@
 				FA65BE0B2C535AE7001624A9 /* FirebasePracticeApp.swift */,
 			);
 			path = App;
+			sourceTree = "<group>";
+		};
+		FA0F80432C6C76BC00CBD29B /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				FA0F80442C6C76E300CBD29B /* Query.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 		FA31185A2C5954B6004A9CDE /* Utilities */ = {
@@ -154,6 +164,7 @@
 				FA0F80422C6BCC6400CBD29B /* App */,
 				FA3118662C5C9D98004A9CDE /* Core */,
 				FA31185A2C5954B6004A9CDE /* Utilities */,
+				FA0F80432C6C76BC00CBD29B /* Extensions */,
 				FA65BE232C53CEBD001624A9 /* Authentication */,
 				FADFF4E92C5CA54D00F2BCB1 /* Firestore */,
 				FA65BE0F2C535AEB001624A9 /* Assets.xcassets */,
@@ -341,6 +352,7 @@
 				FA8E48A72C66193F00D2A3C0 /* ProductManager.swift in Sources */,
 				FA65BE272C54064E001624A9 /* SignInEmailView.swift in Sources */,
 				FA8E48AE2C6639AC00D2A3C0 /* ProductsViewModel.swift in Sources */,
+				FA0F80452C6C76E300CBD29B /* Query.swift in Sources */,
 				FA65BE252C53CF27001624A9 /* AuthenticationView.swift in Sources */,
 				FAD726012C54DE13001C3F22 /* RootView.swift in Sources */,
 				FA8E48AC2C66398F00D2A3C0 /* ProductsView.swift in Sources */,
