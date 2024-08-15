@@ -19,7 +19,13 @@ struct TabbarView: View {
                 Image(systemName: "cart")
                 Text("Products")
             }
-            
+            NavigationStack {
+                FavoritesView()
+            }
+            .tabItem {
+                Image(systemName: "star.fill")
+                Text("Favorites")
+            }
             NavigationStack {
                 ProfileView(showSignInView: $showSignInView)
             }
