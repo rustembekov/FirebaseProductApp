@@ -169,16 +169,16 @@ final class UserManager {
         try await userDocument(userId: userId).updateData(data as [AnyHashable: Any])
     }
     
-    func userFavoritesCollection(userId: String) -> CollectionReference {
-        userDocument(userId: userId).collection("favorite_products")
-    }
-    
-    func addUserFavoritesCollection(userId: String, productId: String) async throws {
+    func addUserFavoritesCollection(userId: String, productId: Int) async throws {
+        let userFavoritesCollection = userDocument(userId: userId).collection("favorite_product").document()
+        let documentId = userFavoritesCollection.documentID
+        
         let data: [String: Any] = [
+            UserFavorites.CodingKeys.id.rawValue: documentId,
             UserFavorites.CodingKeys.productId.rawValue: productId,
             UserFavorites.CodingKeys.dateCreated.rawValue: Date()
         ]
-        userFavoritesCollection(userId: userId)
+        try await userFavoritesCollection.setData(data, merge: false)
     }
 }
 

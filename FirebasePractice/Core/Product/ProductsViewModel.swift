@@ -35,7 +35,6 @@ final class ProductsViewModel: ObservableObject {
     }
 
     func getProductsByPriceAndRating(option: SortingByPriceAndRating) {
-        
         self.selectedFilterByPrice = option
         self.products = []
         self.lastDocument = nil
@@ -60,7 +59,12 @@ final class ProductsViewModel: ObservableObject {
     }
     
     
-    
+    func addUserFavoriteProduct(productId: Int) {
+        Task {
+            let authDataResult = try AuthenticationManager.shared.getAuthenticationUser()
+            try? await UserManager.shared.addUserFavoritesCollection(userId: authDataResult.uid, productId: productId)
+        }
+    }
     
     
     //MARK: For downloading data

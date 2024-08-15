@@ -9,7 +9,7 @@ import SwiftUI
 
 @MainActor
 class FavoritsesViewModel: ObservableObject {
-    
+    @Published var favoriteProducts: [Product] = []
     func getFavoriteProducts() {
         
     }
@@ -19,7 +19,12 @@ struct FavoritesView: View {
     @StateObject private var vm = FavoritsesViewModel()
     
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        List {
+            ForEach(vm.favoriteProducts) { product in
+               ProductCellView(product: product)
+            }
+        }
+        .navigationTitle("Favorite Products")
     }
 }
 
