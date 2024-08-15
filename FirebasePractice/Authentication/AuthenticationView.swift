@@ -13,14 +13,14 @@ import AuthenticationServices
 
 struct AuthenticationView: View {
     @StateObject private var vm = AuthenticationViewModel()
-    @Binding var showSignIn: Bool
+    @Binding var showSignInView: Bool
     
     var body: some View {
         VStack {
             Button(action: {
                 Task {
                     try await vm.signInAnonymously()
-                    showSignIn = false
+                    showSignInView = false
                 }
             }, label: {
                 Text("Sign In Anonymously")
@@ -34,7 +34,7 @@ struct AuthenticationView: View {
             })
             
             NavigationLink {
-                SignInEmailView(showSignInView: $showSignIn)
+                SignInEmailView(showSignInView: $showSignInView)
             } label: {
                 Text("Sign In With Email")
                     .font(.headline)
@@ -49,14 +49,14 @@ struct AuthenticationView: View {
             GoogleSignInButton(viewModel: GoogleSignInButtonViewModel(scheme: .dark, style: .wide, state: .normal)) {
                 Task {
                     try await vm.signInGoogle()
-                    showSignIn = false
+                    showSignInView = false
                 }
             }
             Button(action: {
                 Task {
                     do {
                         try await vm.signInApple()
-                        showSignIn = false
+                        showSignInView = false
                     } catch {
                         print("Error apple: \(error)")
                     }
@@ -77,7 +77,7 @@ struct AuthenticationView: View {
 struct AuthenticationView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationStack {
-            AuthenticationView(showSignIn: .constant(true))
+            AuthenticationView(showSignInView: .constant(true))
         }
     }
 }

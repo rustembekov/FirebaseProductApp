@@ -13,9 +13,7 @@ struct RootView: View {
     var body: some View {
         ZStack {
             if !showSignInView {
-                NavigationStack {
-                    ProductsView()
-                }
+                TabbarView(showSignInView: $showSignInView)
             }
         }
         .onAppear {
@@ -24,7 +22,7 @@ struct RootView: View {
         }
         .fullScreenCover(isPresented: $showSignInView) {
             NavigationStack {
-                AuthenticationView(showSignIn: $showSignInView)
+                AuthenticationView(showSignInView: $showSignInView)
             }
         }
     }

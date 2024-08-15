@@ -115,7 +115,6 @@ final class UserManager {
         userCollection.document(userId)
     }
     
-    
     private let encoder: Firestore.Encoder = {
         let encoder = Firestore.Encoder()
         return encoder
@@ -168,6 +167,43 @@ final class UserManager {
             DBUser.CodingKeys.movies.rawValue: nil
         ]
         try await userDocument(userId: userId).updateData(data as [AnyHashable: Any])
+    }
+    
+    func userFavoritesCollection(userId: String) -> CollectionReference {
+        userDocument(userId: userId).collection("favorite_products")
+    }
+    
+    func addUserFavoritesCollection(userId: String, productId: String) async throws {
+        let data: [String: Any] = [
+            UserFavorites.CodingKeys.productId.rawValue: productId,
+            UserFavorites.CodingKeys.dateCreated.rawValue: Date()
+        ]
+        userFavoritesCollection(userId: userId)
+    }
+}
+
+
+struct UserFavorites: Codable {
+    let id: String
+    let productId: Int
+    let dateCreated: Timestamp
+    
+    enum CodingKeys: String, CodingKey {
+        case id = "id"
+        case productId = "product_id"
+        case dateCreated = "date_created"
+    }
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(self.id, forKey: .id)
+        try container.encode(self.productId, forKey: .productId)
+        try container.encode(self.dateCreated, forKey: .dateCreated)
+    }
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.id = try container.decode(String.self, forKey: .id)
+        self.productId = try container.decode(Int.self, forKey: .productId)
+        self.dateCreated = try container.decode(Timestamp.self, forKey: .dateCreated)
     }
     
 }
