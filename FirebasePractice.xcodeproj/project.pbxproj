@@ -12,6 +12,8 @@
 		FA0F80452C6C76E300CBD29B /* Query.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0F80442C6C76E300CBD29B /* Query.swift */; };
 		FA0F80482C6DD26000CBD29B /* TabbarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0F80472C6DD26000CBD29B /* TabbarView.swift */; };
 		FA0F804D2C6DE38900CBD29B /* FavoritesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0F804C2C6DE38900CBD29B /* FavoritesView.swift */; };
+		FA0F804F2C6EE60600CBD29B /* FavoritesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0F804E2C6EE60600CBD29B /* FavoritesViewModel.swift */; };
+		FA0F80512C6EF8EA00CBD29B /* ProductCellBuilderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0F80502C6EF8EA00CBD29B /* ProductCellBuilderView.swift */; };
 		FA3118592C594F65004A9CDE /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FA3118582C594F65004A9CDE /* GoogleService-Info.plist */; };
 		FA31185C2C5954E3004A9CDE /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA31185B2C5954E3004A9CDE /* ViewController.swift */; };
 		FA31185E2C59BAC2004A9CDE /* GoogleSignInHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA31185D2C59BAC2004A9CDE /* GoogleSignInHelper.swift */; };
@@ -48,6 +50,8 @@
 		FA0F80442C6C76E300CBD29B /* Query.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Query.swift; sourceTree = "<group>"; };
 		FA0F80472C6DD26000CBD29B /* TabbarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabbarView.swift; sourceTree = "<group>"; };
 		FA0F804C2C6DE38900CBD29B /* FavoritesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesView.swift; sourceTree = "<group>"; };
+		FA0F804E2C6EE60600CBD29B /* FavoritesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesViewModel.swift; sourceTree = "<group>"; };
+		FA0F80502C6EF8EA00CBD29B /* ProductCellBuilderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductCellBuilderView.swift; sourceTree = "<group>"; };
 		FA3118582C594F65004A9CDE /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		FA31185B2C5954E3004A9CDE /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		FA31185D2C59BAC2004A9CDE /* GoogleSignInHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleSignInHelper.swift; sourceTree = "<group>"; };
@@ -122,6 +126,7 @@
 			isa = PBXGroup;
 			children = (
 				FA0F804C2C6DE38900CBD29B /* FavoritesView.swift */,
+				FA0F804E2C6EE60600CBD29B /* FavoritesViewModel.swift */,
 			);
 			path = Favorite;
 			sourceTree = "<group>";
@@ -234,6 +239,7 @@
 			isa = PBXGroup;
 			children = (
 				FA8E48B02C66ECF400D2A3C0 /* ProductCellView.swift */,
+				FA0F80502C6EF8EA00CBD29B /* ProductCellBuilderView.swift */,
 			);
 			path = SubViews;
 			sourceTree = "<group>";
@@ -363,12 +369,14 @@
 				FADFF4EB2C5CA5C500F2BCB1 /* UserManager.swift in Sources */,
 				FAD725FD2C54D328001C3F22 /* AuthenticationManager.swift in Sources */,
 				FA4D5D002C55545A0063293A /* SettingsView.swift in Sources */,
+				FA0F804F2C6EE60600CBD29B /* FavoritesViewModel.swift in Sources */,
 				FADFF4E52C5C9F7900F2BCB1 /* SignInEmailViewModel.swift in Sources */,
 				FA8E48A92C661A0500D2A3C0 /* ProductDatabase.swift in Sources */,
 				FA8E48B12C66ECF400D2A3C0 /* ProductCellView.swift in Sources */,
 				FA31185C2C5954E3004A9CDE /* ViewController.swift in Sources */,
 				FADFF4EE2C5CB4AC00F2BCB1 /* ProfileView.swift in Sources */,
 				FA65BE0C2C535AE7001624A9 /* FirebasePracticeApp.swift in Sources */,
+				FA0F80512C6EF8EA00CBD29B /* ProductCellBuilderView.swift in Sources */,
 				FA3118612C5A3F5F004A9CDE /* AppleSignInHelper.swift in Sources */,
 				FAD725FF2C54D63E001C3F22 /* AuthDataModel.swift in Sources */,
 				FA8E48A72C66193F00D2A3C0 /* ProductManager.swift in Sources */,

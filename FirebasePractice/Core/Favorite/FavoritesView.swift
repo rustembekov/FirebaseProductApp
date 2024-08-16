@@ -7,22 +7,22 @@
 
 import SwiftUI
 
-@MainActor
-class FavoritsesViewModel: ObservableObject {
-    @Published var favoriteProducts: [Product] = []
-    func getFavoriteProducts() {
-        
-    }
-}
-
 struct FavoritesView: View {
-    @StateObject private var vm = FavoritsesViewModel()
+    @StateObject private var vm = FavoritesViewModel()
     
     var body: some View {
         List {
             ForEach(vm.favoriteProducts) { product in
-               ProductCellView(product: product)
+                ProductCellBuilderView(productId: String(product.productId))
+                    .contextMenu {
+                        Button("Remove Favorite Product") {
+                            vm.removeFavoriteProducts(productId: product.id)
+                        }
+                    }
             }
+        }
+        .onAppear {
+            vm.getFavoriteProducts()
         }
         .navigationTitle("Favorite Products")
     }

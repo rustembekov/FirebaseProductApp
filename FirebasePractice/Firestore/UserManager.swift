@@ -8,6 +8,7 @@
 import Foundation
 import FirebaseFirestore
 import FirebaseFirestoreSwift
+import SwiftUI
 
 struct Movie: Codable {
     let id: String
@@ -114,6 +115,12 @@ final class UserManager {
     private func userDocument(userId: String) -> DocumentReference {
         userCollection.document(userId)
     }
+    private func userFavoriteProductCollection(userId: String) -> CollectionReference {
+        userDocument(userId: userId).collection("favorite_product")
+    }
+    private func userFavoriteProductDocument(userId: String, productId: String) -> DocumentReference {
+        userFavoriteProductCollection(userId: userId).document(productId)
+    }
     
     private let encoder: Firestore.Encoder = {
         let encoder = Firestore.Encoder()
@@ -169,21 +176,29 @@ final class UserManager {
         try await userDocument(userId: userId).updateData(data as [AnyHashable: Any])
     }
     
-    func addUserFavoritesCollection(userId: String, productId: Int) async throws {
+    func addUserFavoriteProduct(userId: String, productId: Int) async throws {
         let userFavoritesCollection = userDocument(userId: userId).collection("favorite_product").document()
         let documentId = userFavoritesCollection.documentID
         
         let data: [String: Any] = [
-            UserFavorites.CodingKeys.id.rawValue: documentId,
-            UserFavorites.CodingKeys.productId.rawValue: productId,
-            UserFavorites.CodingKeys.dateCreated.rawValue: Date()
+            UserFavoriteProduct.CodingKeys.id.rawValue: documentId,
+            UserFavoriteProduct.CodingKeys.productId.rawValue: productId,
+            UserFavoriteProduct.CodingKeys.dateCreated.rawValue: Date()
         ]
         try await userFavoritesCollection.setData(data, merge: false)
     }
+    func removeUserFavoriteProduct(userId: String, productId: String) {
+        userFavoriteProductDocument(userId: userId, productId: productId).delete()
+    }
+    
+    func getAllFavoriteProducts(userId: String) async throws -> [UserFavoriteProduct] {
+        try await userFavoriteProductCollection(userId: userId).getDocuments(as: UserFavoriteProduct.self)
+    }
+
 }
 
 
-struct UserFavorites: Codable {
+struct UserFavoriteProduct: Identifiable, Codable {
     let id: String
     let productId: Int
     let dateCreated: Timestamp
@@ -193,17 +208,4 @@ struct UserFavorites: Codable {
         case productId = "product_id"
         case dateCreated = "date_created"
     }
-    func encode(to encoder: Encoder) throws {
-        var container = encoder.container(keyedBy: CodingKeys.self)
-        try container.encode(self.id, forKey: .id)
-        try container.encode(self.productId, forKey: .productId)
-        try container.encode(self.dateCreated, forKey: .dateCreated)
-    }
-    init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.id = try container.decode(String.self, forKey: .id)
-        self.productId = try container.decode(Int.self, forKey: .productId)
-        self.dateCreated = try container.decode(Timestamp.self, forKey: .dateCreated)
-    }
-    
 }

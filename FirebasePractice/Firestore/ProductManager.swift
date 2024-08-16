@@ -102,6 +102,7 @@ final class ProductManager {
     
     func getProduct(productId: String) async throws -> Product {
         try await productDocument(productId: productId).getDocument(as: Product.self)
+        
     }
     
     //MARK: Get Products by async
