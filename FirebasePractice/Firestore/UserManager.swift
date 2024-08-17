@@ -110,7 +110,7 @@ final class UserManager {
     
     private init() {}
     
-    private let userCollection = Firestore.firestore().collection("users")
+    private let userCollection: CollectionReference = Firestore.firestore().collection("users")
     
     private func userDocument(userId: String) -> DocumentReference {
         userCollection.document(userId)
@@ -187,6 +187,7 @@ final class UserManager {
         ]
         try await userFavoritesCollection.setData(data, merge: false)
     }
+    
     func removeUserFavoriteProduct(userId: String, productId: String) {
         userFavoriteProductDocument(userId: userId, productId: productId).delete()
     }

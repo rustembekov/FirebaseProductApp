@@ -12,7 +12,7 @@ struct FavoritesView: View {
     
     var body: some View {
         List {
-            ForEach(vm.favoriteProducts) { product in
+            ForEach(vm.userFavoriteProducts) { product in
                 ProductCellBuilderView(productId: String(product.productId))
                     .contextMenu {
                         Button("Remove Favorite Product") {
@@ -20,9 +20,6 @@ struct FavoritesView: View {
                         }
                     }
             }
-        }
-        .onAppear {
-            vm.getFavoriteProducts()
         }
         .navigationTitle("Favorite Products")
     }

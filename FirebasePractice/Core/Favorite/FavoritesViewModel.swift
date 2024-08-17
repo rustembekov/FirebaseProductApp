@@ -9,14 +9,12 @@ import Foundation
 
 @MainActor
 class FavoritesViewModel: ObservableObject {
-    @Published var favoriteProducts: [UserFavoriteProduct] = []
+    @Published private(set) var userFavoriteProducts: [UserFavoriteProduct] = []
     
     func getFavoriteProducts() {
         Task {
             let authDataResult = try AuthenticationManager.shared.getAuthenticationUser()
-            print("AuthenticationManager User ID: \(authDataResult.uid)")
-            self.favoriteProducts = try await UserManager.shared.getAllFavoriteProducts(userId: authDataResult.uid)
-            print("AuthenticationManager Products: \(favoriteProducts)")
+            self.userFavoriteProducts = try await UserManager.shared.getAllFavoriteProducts(userId: authDataResult.uid)
 
         }
     }
@@ -25,6 +23,7 @@ class FavoritesViewModel: ObservableObject {
         Task {
             let authDataResult = try AuthenticationManager.shared.getAuthenticationUser()
             UserManager.shared.removeUserFavoriteProduct(userId: authDataResult.uid, productId: productId)
+            self.getFavoriteProducts()
         }
     }
 }
