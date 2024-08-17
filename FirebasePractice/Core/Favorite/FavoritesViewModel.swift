@@ -15,7 +15,7 @@ class FavoritesViewModel: ObservableObject {
         Task {
             let authDataResult = try AuthenticationManager.shared.getAuthenticationUser()
             self.userFavoriteProducts = try await UserManager.shared.getAllFavoriteProducts(userId: authDataResult.uid)
-
+            print("User Favorite Products: \(userFavoriteProducts)")
         }
     }
     

@@ -21,6 +21,9 @@ struct FavoritesView: View {
                     }
             }
         }
+        .onAppear {
+            vm.getFavoriteProducts()
+        }
         .navigationTitle("Favorite Products")
     }
 }
