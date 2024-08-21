@@ -7,6 +7,7 @@
 
 import Foundation
 import FirebaseFirestore
+import Combine
 
 extension Query {
     func getDocuments<T>(as type: T.Type) async throws -> [T] where T : Decodable {
@@ -28,4 +29,18 @@ extension Query {
         guard let lastElement else { return self }
         return self.start(afterDocument: lastElement)
     }
+    
+    func addSnapshotListener<T>(as type: T.Type) async throws -> (AnyPublisher<[T], Error>) where T: Decodable {
+        let publisher = PassthroughSubject<[T], Error>()
+        let listener = self.addSnapshotListener { querySnapshot, error in
+            guard let documents = querySnapshot?.documents else {
+                print("No documents found!")
+                return
+            }
+            let products: [T] = documents.compactMap { try? $0.data(as: T.self)}
+            publisher.send(products)
+        }
+        return publisher.eraseToAnyPublisher()
+    }
+    
 }

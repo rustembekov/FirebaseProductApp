@@ -176,10 +176,27 @@ final class UserManager {
         try await userDocument(userId: userId).updateData(data as [AnyHashable: Any])
     }
     
+    func addUserFavoriteProductListener(userId: String, completion: @escaping(_ products: [UserFavoriteProduct]) -> ()) {
+        userFavoriteProductCollection(userId: userId).addSnapshotListener { querySnapshot, error in
+            if let error = error {
+                print("Error fetching snapshots: \(error)") 
+                return
+            }
+            
+            guard let documents = querySnapshot?.documents else {
+                print("No documents found")
+                return
+            }
+            
+            let products: [UserFavoriteProduct] = documents.compactMap({ try? $0.data(as: UserFavoriteProduct.self )})
+            completion(products)
+        }
+    }
+    
     func addUserFavoriteProduct(userId: String, productId: Int) async throws {
         let userFavoritesCollection = userDocument(userId: userId).collection("favorite_product").document()
         let documentId = userFavoritesCollection.documentID
-        
+
         let data: [String: Any] = [
             UserFavoriteProduct.CodingKeys.id.rawValue: documentId,
             UserFavoriteProduct.CodingKeys.productId.rawValue: productId,
@@ -187,7 +204,7 @@ final class UserManager {
         ]
         try await userFavoritesCollection.setData(data, merge: false)
     }
-    
+
     func removeUserFavoriteProduct(userId: String, productId: String) {
         userFavoriteProductDocument(userId: userId, productId: productId).delete()
     }

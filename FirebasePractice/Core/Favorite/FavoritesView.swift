@@ -22,7 +22,7 @@ struct FavoritesView: View {
             }
         }
         .onAppear {
-            vm.getFavoriteProducts()
+            try? vm.getFromUserFavoriteProductsListener()
         }
         .navigationTitle("Favorite Products")
     }
