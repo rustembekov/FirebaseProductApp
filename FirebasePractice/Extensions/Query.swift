@@ -30,17 +30,19 @@ extension Query {
         return self.start(afterDocument: lastElement)
     }
     
-    func addSnapshotListener<T>(as type: T.Type) async throws -> (AnyPublisher<[T], Error>) where T: Decodable {
+    func addSnapshotListener<T>(as type: T.Type) -> (AnyPublisher<[T], Error>, ListenerRegistration) where T: Decodable {
         let publisher = PassthroughSubject<[T], Error>()
+        
         let listener = self.addSnapshotListener { querySnapshot, error in
             guard let documents = querySnapshot?.documents else {
                 print("No documents found!")
                 return
             }
+            
             let products: [T] = documents.compactMap { try? $0.data(as: T.self)}
             publisher.send(products)
         }
-        return publisher.eraseToAnyPublisher()
+        return (publisher.eraseToAnyPublisher(), listener)
     }
     
 }

@@ -6,17 +6,22 @@
 //
 
 import Foundation
+import Combine
 
 @MainActor
 class FavoritesViewModel: ObservableObject {
     @Published private(set) var userFavoriteProducts: [UserFavoriteProduct] = []
-    
+    private var cancellables = Set<AnyCancellable>()
 
     func getFromUserFavoriteProductsListener() throws {
         let authDataResult = try AuthenticationManager.shared.getAuthenticationUser()
-        UserManager.shared.addUserFavoriteProductListener(userId: authDataResult.uid) { products in
-            self.userFavoriteProducts = products
-        }
+        UserManager.shared.addUserFavoriteProductListener(userId: authDataResult.uid)
+            .sink { completion in
+                print("Completion: \(completion)")
+            } receiveValue: { [weak self] userFavoriteProducts in
+                self?.userFavoriteProducts = userFavoriteProducts
+            }
+            .store(in: &cancellables)
     }
     
 //    func getFavoriteProducts() {

@@ -9,6 +9,7 @@ import Foundation
 import FirebaseFirestore
 import FirebaseFirestoreSwift
 import SwiftUI
+import Combine
 
 struct Movie: Codable {
     let id: String
@@ -122,6 +123,8 @@ final class UserManager {
         userFavoriteProductCollection(userId: userId).document(productId)
     }
     
+    private var userFavoriteProductListener: ListenerRegistration? = nil
+    
     private let encoder: Firestore.Encoder = {
         let encoder = Firestore.Encoder()
         return encoder
@@ -191,6 +194,17 @@ final class UserManager {
             let products: [UserFavoriteProduct] = documents.compactMap({ try? $0.data(as: UserFavoriteProduct.self )})
             completion(products)
         }
+    }
+    
+    func addUserFavoriteProductListener(userId: String) -> AnyPublisher<[UserFavoriteProduct], Error> {
+        let (publisher, listener) = userFavoriteProductCollection(userId: userId).addSnapshotListener(as: UserFavoriteProduct.self)
+        self.userFavoriteProductListener = listener
+        
+        return publisher
+    }
+    
+    func removeUserFavoriteProductListener() {
+        self.userFavoriteProductListener?.remove()
     }
     
     func addUserFavoriteProduct(userId: String, productId: Int) async throws {
