@@ -6,10 +6,12 @@
 //
 
 import SwiftUI
+import PhotosUI
 
 struct ProfileView: View {
     @StateObject private var vm = ProfileViewModel()
     @Binding var showSignInView: Bool
+    @State private var selectedPhotosPickerItem: PhotosPickerItem? = nil
     
     let preferenceOptions: [String] = ["Sports", "Movies", "Books"]
 
@@ -65,6 +67,10 @@ struct ProfileView: View {
                     Text("User is movie: \(user.movies?.title ?? "None")")
                 }
                 
+                PhotosPicker(selection: $selectedPhotosPickerItem, matching: .images, photoLibrary: .shared()) {
+                    Text("Select a image")
+                }
+                
             } else {
                 Text("Loading user data...")
             }
@@ -72,6 +78,11 @@ struct ProfileView: View {
         .task {
             try? await vm.loadCurrentUser()
         }
+        .onChange(of: selectedPhotosPickerItem, perform: { newValue in
+            if let newValue {
+                vm.saveImage(item: newValue)
+            }
+        })
         .navigationTitle("Profile")
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {

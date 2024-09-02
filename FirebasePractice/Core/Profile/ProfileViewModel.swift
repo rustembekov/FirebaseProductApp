@@ -6,6 +6,8 @@
 //
 
 import Foundation
+import SwiftUI
+import PhotosUI
 
 @MainActor
 final class ProfileViewModel: ObservableObject {
@@ -20,8 +22,10 @@ final class ProfileViewModel: ObservableObject {
     func togglePremiumStatus() {
         guard let user = user else { return }
         let currentValue = user.isPremium ?? false
-        
-        Task {
+
+        Task { [weak self] in
+            guard let self = self else { return }
+            
             do {
                 try await UserManager.shared.updateUserProfile(isPremium: !currentValue, userId: user.userId)
                 self.user = try await UserManager.shared.getUser(userId: user.userId)
@@ -30,6 +34,7 @@ final class ProfileViewModel: ObservableObject {
             }
         }
     }
+
     
     func addUserPreference(text: String) {
         guard let user = user else { return }
@@ -84,4 +89,25 @@ final class ProfileViewModel: ObservableObject {
         }
     }
 
+    
+    func saveImage(item: PhotosPickerItem) {
+        Task {
+            do {
+                guard let data = try await item.loadTransferable(type: Data.self) else {
+                    print("Failed to load image data")
+                    return
+                }
+                let (path, name) = try await StorageManager.shared.saveImage(data: data)
+                print("Successfully added!!!")
+                print("Path is: \(path)")
+                print("Name is: \(name)")
+            } catch let error as NSError {
+                print("Error loading image data: \(error.localizedDescription)")
+                print("Underlying error: \(error.userInfo[NSUnderlyingErrorKey] ?? "None")")
+            }
+        }
+    }
+
+
+    
 }
