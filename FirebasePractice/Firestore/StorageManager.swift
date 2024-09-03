@@ -7,26 +7,35 @@
 
 import Foundation
 import FirebaseStorage
-import Photos
 
 final class StorageManager {
     static let shared = StorageManager()
     private init() {}
     private let storage = Storage.storage().reference()
 
-    func saveImage(data: Data) async throws -> (path: String, name: String) {
+    private var imagesReference: StorageReference {
+        storage.child("images")
+    }
+    
+    private func userReferenceToImages(userId: String) -> StorageReference {
+        imagesReference.child("users").child(userId)
+    }
+    
+    func saveImage(data: Data, userId: String) async throws -> (path: String, name: String) {
         let meta = StorageMetadata()
         meta.contentType = "image/jpeg"
         
         let path = "\(UUID().uuidString).jpeg"
-        let returnedStorageMetadata = try await storage.child(path).putDataAsync(data, metadata: meta)
+        let returnedStorageMetadata = try await userReferenceToImages(userId: userId).child(path).putDataAsync(data, metadata: meta)
         
         guard let returnedPath = returnedStorageMetadata.path, let returnedName = returnedStorageMetadata.name else {
             throw URLError(.backgroundSessionWasDisconnected)
         }
-        
-
         return (returnedPath, returnedName)
+    }
+    
+    func getImagePathForUrlImage() {
+        
     }
     
 //    func saveImage(image: UIImage) async throws -> (path: String, name: String) {

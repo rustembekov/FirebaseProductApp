@@ -91,13 +91,14 @@ final class ProfileViewModel: ObservableObject {
 
     
     func saveImage(item: PhotosPickerItem) {
+        guard let user = user else { return }
         Task {
             do {
                 guard let data = try await item.loadTransferable(type: Data.self) else {
                     print("Failed to load image data")
                     return
                 }
-                let (path, name) = try await StorageManager.shared.saveImage(data: data)
+                let (path, name) = try await StorageManager.shared.saveImage(data: data, userId: user.userId)
                 print("Successfully added!!!")
                 print("Path is: \(path)")
                 print("Name is: \(name)")

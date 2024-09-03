@@ -71,6 +71,16 @@ struct ProfileView: View {
                     Text("Select a image")
                 }
                 
+                if let urlString = vm.user?.profileImagePath, let url = URL(string: urlString)  {
+                    AsyncImage(url: url, scale: 1) { image in
+                        image
+                    } placeholder: {
+                        ProgressView()
+                    }
+
+                }
+
+                
             } else {
                 Text("Loading user data...")
             }
