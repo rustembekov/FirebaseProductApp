@@ -71,11 +71,15 @@ struct ProfileView: View {
                     Text("Select a image")
                 }
                 
-                if let urlString = vm.user?.profileImagePath, let url = URL(string: urlString)  {
-                    AsyncImage(url: url, scale: 1) { image in
+                if let urlString = vm.user?.profileImagePathUrl, let url = URL(string: urlString)  {
+                    AsyncImage(url: url) { image in
                         image
+                            .resizable()
+                            .scaledToFill()
+                            .frame(width: 150, height: 150)
                     } placeholder: {
                         ProgressView()
+                            .frame(width: 150, height: 150)
                     }
 
                 }

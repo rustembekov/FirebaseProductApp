@@ -102,13 +102,14 @@ final class ProfileViewModel: ObservableObject {
                 print("Successfully added!!!")
                 print("Path is: \(path)")
                 print("Name is: \(name)")
+                let userProfileImageUrl = try await StorageManager.shared.getImageUrl(userProfileImagePath: path)
+                print("User Profie image url: \(userProfileImageUrl)")
+                try await UserManager.shared.updateUserProfileMediaPath(userId: user.userId, path: path, url: userProfileImageUrl.absoluteString)
             } catch let error as NSError {
                 print("Error loading image data: \(error.localizedDescription)")
                 print("Underlying error: \(error.userInfo[NSUnderlyingErrorKey] ?? "None")")
             }
         }
     }
-
-
     
 }

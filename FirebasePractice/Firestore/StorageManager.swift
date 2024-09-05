@@ -34,8 +34,12 @@ final class StorageManager {
         return (returnedPath, returnedName)
     }
     
-    func getImagePathForUrlImage() {
-        
+    func getImagePath(userProfileImagePath: String) -> StorageReference {
+        Storage.storage().reference(withPath: userProfileImagePath)
+    }
+    
+    func getImageUrl(userProfileImagePath: String) async throws -> URL {
+        try await getImagePath(userProfileImagePath: userProfileImagePath).downloadURL()
     }
     
 //    func saveImage(image: UIImage) async throws -> (path: String, name: String) {
