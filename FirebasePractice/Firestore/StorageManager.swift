@@ -42,6 +42,10 @@ final class StorageManager {
         try await getImagePath(userProfileImagePath: userProfileImagePath).downloadURL()
     }
     
+    func deleteImage(userProfileImagePath: String) async throws {
+        try await getImagePath(userProfileImagePath: userProfileImagePath).delete()
+    }
+    
 //    func saveImage(image: UIImage) async throws -> (path: String, name: String) {
 //        guard let data = image.jpegData(compressionQuality: 1) else {
 //            throw URLError(.backgroundSessionWasDisconnected)

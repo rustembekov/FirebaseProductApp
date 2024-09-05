@@ -241,8 +241,7 @@ final class UserManager {
         try await userFavoriteProductCollection(userId: userId).getDocuments(as: UserFavoriteProduct.self)
     }
 
-    func updateUserProfileMediaPath(userId: String, path: String, url: String) async throws {
-        print("URL of image is: \(url)")
+    func updateUserProfileMediaPath(userId: String, path: String?, url: String?) async throws {
         let data: [String: Any] = [
             DBUser.CodingKeys.profileImagePath.rawValue: path,
             DBUser.CodingKeys.profileImagePathUrl.rawValue: url

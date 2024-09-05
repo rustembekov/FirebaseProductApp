@@ -81,7 +81,12 @@ struct ProfileView: View {
                         ProgressView()
                             .frame(width: 150, height: 150)
                     }
-
+                }
+                
+                if vm.user?.profileImagePath != nil {
+                    Button("Delete image") {
+                        vm.deleteImage()
+                    }
                 }
 
                 

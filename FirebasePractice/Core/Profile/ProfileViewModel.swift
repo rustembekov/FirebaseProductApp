@@ -112,4 +112,20 @@ final class ProfileViewModel: ObservableObject {
         }
     }
     
+    func deleteImage() {
+        guard let user, let path = user.profileImagePath  else { return }
+        Task {
+            do {
+                try await StorageManager.shared.deleteImage(userProfileImagePath: path)
+                try await UserManager.shared.updateUserProfileMediaPath(userId: user.userId, path: nil, url: nil)
+                self.user = try await UserManager.shared.getUser(userId: user.userId)
+
+                print("Successfully deleted!!!")
+            } catch {
+                print("Error removing image: \(error.localizedDescription)")
+            }
+        }
+    }
+    
+    
 }
