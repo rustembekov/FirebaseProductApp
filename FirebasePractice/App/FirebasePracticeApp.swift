@@ -14,7 +14,7 @@ struct FirebasePracticeApp: App {
     
     var body: some Scene {
         WindowGroup {
-            RootView()
+            CrashView()
         }
     }
 }
