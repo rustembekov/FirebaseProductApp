@@ -18,6 +18,7 @@
 		9E0CE7042C8C42EC008196A0 /* FirebaseFirestoreCombine-Community in Frameworks */ = {isa = PBXBuildFile; productRef = 9E0CE7032C8C42EC008196A0 /* FirebaseFirestoreCombine-Community */; };
 		9E0CE7062C8C42EC008196A0 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 9E0CE7052C8C42EC008196A0 /* FirebaseStorage */; };
 		9E0CE7092C8C5022008196A0 /* CrashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E0CE7082C8C5022008196A0 /* CrashView.swift */; };
+		9E9BC69B2C8F59F500382B77 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 9E9BC69A2C8F59F500382B77 /* FirebaseAnalytics */; };
 		FA0F80452C6C76E300CBD29B /* Query.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0F80442C6C76E300CBD29B /* Query.swift */; };
 		FA0F80482C6DD26000CBD29B /* TabbarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0F80472C6DD26000CBD29B /* TabbarView.swift */; };
 		FA0F804D2C6DE38900CBD29B /* FavoritesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0F804C2C6DE38900CBD29B /* FavoritesView.swift */; };
@@ -53,6 +54,7 @@
 /* Begin PBXFileReference section */
 		9E0CE6F12C8C403F008196A0 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		9E0CE7082C8C5022008196A0 /* CrashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CrashView.swift; sourceTree = "<group>"; };
+		9E9BC6992C8F57E800382B77 /* FirebasePractice.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = FirebasePractice.entitlements; sourceTree = "<group>"; };
 		FA05E62C2C59471F00711498 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		FA0F80442C6C76E300CBD29B /* Query.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Query.swift; sourceTree = "<group>"; };
 		FA0F80472C6DD26000CBD29B /* TabbarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabbarView.swift; sourceTree = "<group>"; };
@@ -61,7 +63,6 @@
 		FA0F80502C6EF8EA00CBD29B /* ProductCellBuilderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductCellBuilderView.swift; sourceTree = "<group>"; };
 		FA31185B2C5954E3004A9CDE /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		FA31185D2C59BAC2004A9CDE /* GoogleSignInHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleSignInHelper.swift; sourceTree = "<group>"; };
-		FA31185F2C5A1E00004A9CDE /* FirebasePractice.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = FirebasePractice.entitlements; sourceTree = "<group>"; };
 		FA3118602C5A3F5F004A9CDE /* AppleSignInHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleSignInHelper.swift; sourceTree = "<group>"; };
 		FA4D5CFF2C55545A0063293A /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		FA65BE082C535AE6001624A9 /* FirebasePractice.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FirebasePractice.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -101,6 +102,7 @@
 				9E0CE6FE2C8C42EC008196A0 /* FirebaseCrashlytics in Frameworks */,
 				9E0CE6F82C8C420B008196A0 /* GoogleSignInSwift in Frameworks */,
 				9E0CE6FC2C8C42EC008196A0 /* FirebaseAuthCombine-Community in Frameworks */,
+				9E9BC69B2C8F59F500382B77 /* FirebaseAnalytics in Frameworks */,
 				9E0CE7022C8C42EC008196A0 /* FirebaseFirestore in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -203,7 +205,7 @@
 		FA65BE0A2C535AE7001624A9 /* FirebasePractice */ = {
 			isa = PBXGroup;
 			children = (
-				FA31185F2C5A1E00004A9CDE /* FirebasePractice.entitlements */,
+				9E9BC6992C8F57E800382B77 /* FirebasePractice.entitlements */,
 				9E0CE6F12C8C403F008196A0 /* GoogleService-Info.plist */,
 				FA05E62C2C59471F00711498 /* Info.plist */,
 				FA0F80422C6BCC6400CBD29B /* App */,
@@ -327,6 +329,7 @@
 				FA65BE042C535AE6001624A9 /* Sources */,
 				FA65BE052C535AE6001624A9 /* Frameworks */,
 				FA65BE062C535AE6001624A9 /* Resources */,
+				9E9BC6982C8E17AC00382B77 /* Run Script */,
 			);
 			buildRules = (
 			);
@@ -343,6 +346,7 @@
 				9E0CE7012C8C42EC008196A0 /* FirebaseFirestore */,
 				9E0CE7032C8C42EC008196A0 /* FirebaseFirestoreCombine-Community */,
 				9E0CE7052C8C42EC008196A0 /* FirebaseStorage */,
+				9E9BC69A2C8F59F500382B77 /* FirebaseAnalytics */,
 			);
 			productName = FirebasePractice;
 			productReference = FA65BE082C535AE6001624A9 /* FirebasePractice.app */;
@@ -397,6 +401,32 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		9E9BC6982C8E17AC00382B77 /* Run Script */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}",
+				"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Resources/DWARF/${PRODUCT_NAME}",
+				"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Info.plist",
+				"$(TARGET_BUILD_DIR)/$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/GoogleService-Info.plist",
+				"$(TARGET_BUILD_DIR)/$(EXECUTABLE_PATH)",
+			);
+			name = "Run Script";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${BUILD_DIR%/Build/*}/SourcePackages/checkouts/firebase-ios-sdk/Crashlytics/run\"\n\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		FA65BE042C535AE6001624A9 /* Sources */ = {
@@ -471,7 +501,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -701,6 +731,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 9E0CE6F32C8C41DE008196A0 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseStorage;
+		};
+		9E9BC69A2C8F59F500382B77 /* FirebaseAnalytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 9E0CE6F32C8C41DE008196A0 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalytics;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
