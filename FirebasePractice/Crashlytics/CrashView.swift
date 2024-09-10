@@ -31,6 +31,9 @@ struct CrashView: View {
             .foregroundColor(.yellow)
         }
         .padding()
+        .onAppear {
+            CrashManager.shared.setUserId(userId: "AAAAA")
+        }
     }
 }
 
