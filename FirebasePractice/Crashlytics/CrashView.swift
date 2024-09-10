@@ -20,7 +20,7 @@ struct CrashView: View {
             
             Button("Press Second Button") {
                 let myString: String? = nil
-                let string = myString!
+                _ = myString!
             }
             .foregroundColor(.orange)
             
