@@ -26,7 +26,7 @@ struct CrashView: View {
             
             Button("Press Third Button") {
                 let options: [String] = []
-                _ = options[0]
+                let item = options[0]
             }
             .foregroundColor(.yellow)
         }
