@@ -14,8 +14,9 @@ struct FirebasePracticeApp: App {
     
     var body: some Scene {
         WindowGroup {
-            CrashView()
-            // RootView() // Uncomment if you have a main root view.
+//            PerformanceView()
+//            CrashView()
+             RootView()
         }
     }
 }
@@ -23,10 +24,8 @@ struct FirebasePracticeApp: App {
 class AppDelegate: NSObject, UIApplicationDelegate {
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
-        // Configure Firebase
         FirebaseApp.configure()
         
-        // Enable Crashlytics data collection
         Crashlytics.crashlytics().setCrashlyticsCollectionEnabled(true)
         
         return true
